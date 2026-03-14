@@ -929,6 +929,9 @@
                 document.getElementById('ui').style.display = 'flex';
                 document.getElementById('task-box').style.display = 'block';
                 document.getElementById('joystick').style.display = 'block';
+                document.getElementById('floor').style.display = 'block';
+                document.getElementById('baby').style.display = 'block';
+                document.getElementById('house').style.display = 'block';
                 document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
                 spawnTarget();
             } else {
@@ -1027,7 +1030,7 @@
             // Add floor
             const floor = document.createElement('div');
             floor.id = 'floor';
-            floor.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:100px;background:#deb887;border-top:5px solid #c9a066;';
+            floor.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:100px;background:#deb887;border-top:5px solid #c9a066;display:none;';
             container.appendChild(floor);
             
             // Add baby
