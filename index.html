@@ -363,18 +363,8 @@
             momStartTime = null;
             birthPhase = 'growing';
 
-            // Create white blood cells (obstacles) - FEWER for easier game
-            for (let i = 0; i < 5; i++) {
-                obstacles.push({
-                    x: Math.random() * 700 + 50,
-                    y: 150 + Math.random() * 400,
-                    radius: 20 + Math.random() * 15,
-                    vx: (Math.random() - 0.5) * 2,
-                    vy: (Math.random() - 0.5) * 2,
-                    type: 'whiteBloodCell'
-                });
-            }
-            
+            // No white blood cells - just race!
+
             // Create other racer sperms
             for (let i = 0; i < 7; i++) {
                 otherSperms.push({
@@ -771,7 +761,7 @@
             }
 
             // Move player sperm - FASTER speed
-            const speed = 8;
+            const speed = 5;
             if (keys['ArrowUp'] || keys['w'] || joystickDY < -0.5) playerSperm.vy = -speed;
             else if (keys['ArrowDown'] || keys['s'] || joystickDY > 0.5) playerSperm.vy = speed;
             else playerSperm.vy *= 0.9;
@@ -805,25 +795,6 @@
                         showBaby = true;
                         if (!babyStartTime) babyStartTime = Date.now();
                     }, 2000);
-                }
-            });
-
-            // Move obstacles
-            obstacles.forEach(obs => {
-                obs.x += obs.vx;
-                obs.y += obs.vy;
-                if (obs.x < 60 || obs.x > 740) obs.vx *= -1;
-                if (obs.y < 100 || obs.y > 580) obs.vy *= -1;
-
-                const dx = playerSperm.x - obs.x;
-                const dy = playerSperm.y - obs.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < obs.radius + playerSperm.size) {
-                    playerSperm.x = 400;
-                    playerSperm.y = 550;
-                    playerSperm.vx = 0;
-                    playerSperm.vy = 0;
-                    showMessage('Ouch! White blood cell! Try again! 💥');
                 }
             });
 
@@ -1007,8 +978,8 @@
             knob.style.left = (30 + Math.cos(angle) * dist) + 'px';
             knob.style.top = (30 + Math.sin(angle) * dist) + 'px';
             
-            joystickDX = (dx / maxDist) * 3;
-            joystickDY = (dy / maxDist) * 3;
+            joystickDX = (dx / maxDist) * 2;
+            joystickDY = (dy / maxDist) * 2;
         }
         
         function stopJoystick() {
@@ -1057,12 +1028,12 @@
             }
             
             // Keyboard override
-            if (keys['ArrowLeft'] || keys['a']) joystickDX = -3;
-            else if (keys['ArrowRight'] || keys['d']) joystickDX = 3;
+            if (keys['ArrowLeft'] || keys['a']) joystickDX = -2;
+            else if (keys['ArrowRight'] || keys['d']) joystickDX = 2;
             else if (!joystickActive) joystickDX = 0;
             
-            if (keys['ArrowUp'] || keys['w']) joystickDY = -3;
-            else if (keys['ArrowDown'] || keys['s']) joystickDY = 3;
+            if (keys['ArrowUp'] || keys['w']) joystickDY = -2;
+            else if (keys['ArrowDown'] || keys['s']) joystickDY = 2;
             else if (!joystickActive) joystickDY = 0;
             
             babyX += joystickDX;
