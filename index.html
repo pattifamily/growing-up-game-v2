@@ -250,6 +250,9 @@
     <div id="game-container">
         <canvas id="raceCanvas" width="800" height="600"></canvas>
         
+        <!-- The baby character -->
+        <div id="baby" style="position:absolute;left:350px;top:420px;font-size:40px;display:none;z-index:9999;">👶</div>
+        
         <div id="start-screen">
             <h1>🎮 Growing Up Game 🎮</h1>
             <p>Race to be the first to reach the egg!</p>
@@ -1123,11 +1126,7 @@
             
             // Floor element removed - no longer needed
             
-            // Replace canvas with simple emoji-based baby
-            const baby = document.createElement('div');
-            baby.id = 'baby';
-            baby.style.cssText = 'position:absolute;left:350px;top:420px;font-size:50px;display:none;z-index:9999;';
-            container.appendChild(baby);
+            // Baby is now in HTML
             
             function updateBabyEmoji() {
                 const babyEl = document.getElementById('baby');
