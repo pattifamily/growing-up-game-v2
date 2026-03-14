@@ -263,6 +263,7 @@
             <p>Use ⬅️ ➡️ ⬆️ ⬆️ arrow keys or joystick to move</p>
             <p>Avoid the white blood cells! ❌</p>
             <button onclick="startRace()">GO! 🏊</button>
+            <button onclick="skipRace()" style="margin-left:10px;background:#888;">Skip Race ➡️</button>
         </div>
         
         <div id="age-screen">
@@ -348,7 +349,7 @@
                 vx: 0,
                 vy: 0,
                 tailAngle: 0,
-                size: 15
+                size: 20
             };
             egg = { x: 400, y: 80, radius: 35 };
             obstacles = [];
@@ -362,8 +363,8 @@
             momStartTime = null;
             birthPhase = 'growing';
 
-            // Create white blood cells (obstacles)
-            for (let i = 0; i < 10; i++) {
+            // Create white blood cells (obstacles) - FEWER for easier game
+            for (let i = 0; i < 5; i++) {
                 obstacles.push({
                     x: Math.random() * 700 + 50,
                     y: 150 + Math.random() * 400,
@@ -769,8 +770,8 @@
                 return;
             }
 
-            // Move player sperm
-            const speed = 5;
+            // Move player sperm - FASTER speed
+            const speed = 8;
             if (keys['ArrowUp'] || keys['w']) playerSperm.vy = -speed;
             else if (keys['ArrowDown'] || keys['s']) playerSperm.vy = speed;
             else playerSperm.vy *= 0.9;
@@ -870,6 +871,17 @@
             phase = 'race';
             raceRunning = true;
             initRace();
+            updateRace();
+        }
+        
+        function skipRace() {
+            // Skip the race - you win automatically!
+            document.getElementById('start-screen').style.display = 'none';
+            phase = 'race';
+            raceWon = true;
+            showBaby = true;
+            babyStartTime = Date.now();
+            showMessage('🎉 You won! 🎉\nYou reached the egg!');
             updateRace();
         }
         
