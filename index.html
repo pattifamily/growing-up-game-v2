@@ -827,7 +827,7 @@
                         document.getElementById('task-box').style.display = 'block';
                         document.getElementById('joystick').style.display = 'block';
                         // floor removed
-                        document.getElementById('babyCanvas').style.display = 'block';
+                        document.getElementById('baby').style.display = 'block';
                         document.getElementById('house').style.display = 'block';
                         document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
                         spawnTarget();
@@ -1001,9 +1001,10 @@
                 document.getElementById('task-box').style.display = 'block';
                 document.getElementById('joystick').style.display = 'block';
                 // floor removed
-                document.getElementById('babyCanvas').style.display = 'block';
+                document.getElementById('baby').style.display = 'block';
                 document.getElementById('house').style.display = 'block';
                 document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
+                updateBabyEmoji();
                 spawnTarget();
             } else {
                 spawnTarget();
@@ -1101,13 +1102,34 @@
             
             // Floor element removed - no longer needed
             
-            // Baby element - now a canvas for drawing the character
-            const babyCanvas = document.createElement('canvas');
-            babyCanvas.id = 'babyCanvas';
-            babyCanvas.width = 80;
-            babyCanvas.height = 100;
-            babyCanvas.style.cssText = 'position:absolute;left:350px;top:450px;display:none;z-index:50;';
-            container.appendChild(babyCanvas);
+            // Replace canvas with simple emoji-based baby
+            const baby = document.createElement('div');
+            baby.id = 'baby';
+            baby.style.cssText = 'position:absolute;left:350px;top:420px;font-size:50px;display:none;z-index:50;';
+            container.appendChild(baby);
+            
+            function updateBabyEmoji() {
+                const babyEl = document.getElementById('baby');
+                let emoji = '👶';
+                let size = 40;
+                
+                if (gender === 'boy') {
+                    if (age < 1) { emoji = '👶'; size = 35; }
+                    else if (age < 2) { emoji = '👦'; size = 45; }
+                    else if (age < 5) { emoji = '👦'; size = 55; }
+                    else if (age < 10) { emoji = '👦'; size = 65; }
+                    else { emoji = '👨'; size = 75; }
+                } else {
+                    if (age < 1) { emoji = '👶'; size = 35; }
+                    else if (age < 2) { emoji = '👧'; size = 45; }
+                    else if (age < 5) { emoji = '👧'; size = 55; }
+                    else if (age < 10) { emoji = '👧'; size = 65; }
+                    else { emoji = '👩'; size = 75; }
+                }
+                
+                babyEl.textContent = emoji;
+                babyEl.style.fontSize = size + 'px';
+            }
             
             // Add house
             const house = document.createElement('div');
@@ -1119,87 +1141,6 @@
         
         initGameplay();
         
-        function drawBabyCharacter(currentAge, gender) {
-            const canvas = document.getElementById('babyCanvas');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const centerX = canvas.width / 2;
-            const baseY = canvas.height - 10;
-            
-            const skinColor = '#ffdbac';
-            const hairColor = gender === 'boy' ? '#4a3728' : '#8B4513';
-            const shirtColor = gender === 'boy' ? '#4169E1' : '#FF69B4';
-            const pantsColor = '#4169E1';
-            
-            let bodyScale = 0.4;
-            if (currentAge < 1) bodyScale = 0.3;
-            else if (currentAge < 2) bodyScale = 0.35;
-            else if (currentAge < 5) bodyScale = 0.45;
-            else bodyScale = 0.55;
-            
-            const headSize = 40 * bodyScale;
-            const headY = baseY - 80 * bodyScale;
-            
-            // Body
-            ctx.fillStyle = shirtColor;
-            ctx.beginPath();
-            ctx.ellipse(centerX, baseY - 40 * bodyScale, 25 * bodyScale, 35 * bodyScale, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Legs
-            ctx.fillStyle = pantsColor;
-            ctx.fillRect(centerX - 20 * bodyScale, baseY - 20 * bodyScale, 12 * bodyScale, 25 * bodyScale);
-            ctx.fillRect(centerX + 8 * bodyScale, baseY - 20 * bodyScale, 12 * bodyScale, 25 * bodyScale);
-            
-            // Arms
-            ctx.fillStyle = skinColor;
-            ctx.beginPath();
-            ctx.ellipse(centerX - 35 * bodyScale, baseY - 45 * bodyScale, 8 * bodyScale, 20 * bodyScale, -0.3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(centerX + 35 * bodyScale, baseY - 45 * bodyScale, 8 * bodyScale, 20 * bodyScale, 0.3, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Head
-            ctx.fillStyle = skinColor;
-            ctx.beginPath();
-            ctx.arc(centerX, headY, headSize, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Hair
-            ctx.fillStyle = hairColor;
-            if (currentAge < 1) {
-                ctx.beginPath();
-                ctx.arc(centerX, headY - headSize + 5, 8, Math.PI, 0);
-                ctx.fill();
-            } else {
-                ctx.beginPath();
-                ctx.arc(centerX, headY - headSize * 0.3, headSize * 1.1, Math.PI, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            // Eyes
-            ctx.fillStyle = '#333';
-            ctx.beginPath();
-            ctx.arc(centerX - 12 * bodyScale, headY - 5 * bodyScale, 4 * bodyScale, 0, Math.PI * 2);
-            ctx.arc(centerX + 12 * bodyScale, headY - 5 * bodyScale, 4 * bodyScale, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Smile
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(centerX, headY + 10 * bodyScale, 8 * bodyScale, 0.2, Math.PI - 0.2);
-            ctx.stroke();
-            
-            // Cheeks
-            ctx.fillStyle = 'rgba(255, 182, 193, 0.5)';
-            ctx.beginPath();
-            ctx.arc(centerX - 20 * bodyScale, headY + 5 * bodyScale, 6 * bodyScale, 0, Math.PI * 2);
-            ctx.arc(centerX + 20 * bodyScale, headY + 5 * bodyScale, 6 * bodyScale, 0, Math.PI * 2);
-            ctx.fill();
-        }
         
         function updateGameplay() {
             if (phase !== 'gameplay') {
@@ -1223,15 +1164,15 @@
             babyY = Math.max(350, Math.min(520, babyY));
             
             // Move the baby canvas
-            const babyCanvas = document.getElementById('babyCanvas');
-            babyCanvas.style.left = babyX + 'px';
-            babyCanvas.style.top = babyY + 'px';
+            const babyEl = document.getElementById('baby');
+            babyEl.style.left = babyX + 'px';
+            babyEl.style.top = babyY + 'px';
             
             // Draw the baby based on age
-            drawBabyCharacter(age, gender);
+            updateBabyEmoji();
             
             // Get collision rect for the baby
-            const babyRect = babyCanvas.getBoundingClientRect();
+            const babyRect = babyEl.getBoundingClientRect();
             
             const target = document.getElementById('target');
             if (target && target.style.display !== 'none') {
@@ -1261,6 +1202,7 @@
                         document.getElementById('tasks').textContent = 0;
                         age += 0.5;
                         document.getElementById('age').textContent = age;
+                        updateBabyEmoji();
                         triggerBirthday(age);
                     } else {
                         spawnTarget();
