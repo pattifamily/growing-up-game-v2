@@ -1024,6 +1024,13 @@
                 tasks = 0;
                 document.getElementById('tasks').textContent = 0;
                 document.getElementById('age').textContent = age;
+                
+                // Make sure baby is visible
+                const babyEl = document.getElementById('baby');
+                if (babyEl) {
+                    babyEl.style.display = 'block';
+                }
+                
                 updateBabyEmoji();
                 triggerBirthday(age);
             }
@@ -1119,7 +1126,7 @@
             // Replace canvas with simple emoji-based baby
             const baby = document.createElement('div');
             baby.id = 'baby';
-            baby.style.cssText = 'position:absolute;left:350px;top:420px;font-size:50px;display:none;z-index:50;';
+            baby.style.cssText = 'position:absolute;left:350px;top:420px;font-size:50px;display:none;z-index:9999;';
             container.appendChild(baby);
             
             function updateBabyEmoji() {
@@ -1160,6 +1167,12 @@
             if (phase !== 'gameplay') {
                 requestAnimationFrame(updateGameplay);
                 return;
+            }
+            
+            // Make sure baby is visible
+            const babyEl = document.getElementById('baby');
+            if (babyEl && babyEl.style.display === 'none') {
+                babyEl.style.display = 'block';
             }
             
             // Keyboard override
