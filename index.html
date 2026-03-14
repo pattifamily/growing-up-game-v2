@@ -1104,9 +1104,9 @@
             // Baby element - now a canvas for drawing the character
             const babyCanvas = document.createElement('canvas');
             babyCanvas.id = 'babyCanvas';
-            babyCanvas.width = 150;
-            babyCanvas.height = 200;
-            babyCanvas.style.cssText = 'position:absolute;left:350px;top:300px;display:none;';
+            babyCanvas.width = 80;
+            babyCanvas.height = 100;
+            babyCanvas.style.cssText = 'position:absolute;left:350px;top:450px;display:none;';
             container.appendChild(babyCanvas);
             
             // Add house
@@ -1132,11 +1132,11 @@
             const shirtColor = gender === 'boy' ? '#4169E1' : '#FF69B4';
             const pantsColor = '#4169E1';
             
-            let bodyScale = 1;
-            if (currentAge < 1) bodyScale = 0.6;
-            else if (currentAge < 2) bodyScale = 0.75;
-            else if (currentAge < 5) bodyScale = 1;
-            else bodyScale = 1.2;
+            let bodyScale = 0.4;
+            if (currentAge < 1) bodyScale = 0.3;
+            else if (currentAge < 2) bodyScale = 0.35;
+            else if (currentAge < 5) bodyScale = 0.45;
+            else bodyScale = 0.55;
             
             const headSize = 40 * bodyScale;
             const headY = baseY - 80 * bodyScale;
@@ -1220,7 +1220,7 @@
             babyY += joystickDY;
             
             babyX = Math.max(0, Math.min(700, babyX));
-            babyY = Math.max(50, Math.min(450, babyY));
+            babyY = Math.max(350, Math.min(520, babyY));
             
             // Move the baby canvas
             const babyCanvas = document.getElementById('babyCanvas');
