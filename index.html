@@ -10,7 +10,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -30,64 +30,9 @@
             overflow: hidden;
         }
         
-        #scene {
+        canvas {
             width: 100%;
             height: 100%;
-            position: relative;
-        }
-        
-        .character {
-            position: absolute;
-            font-size: 80px;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-        }
-        
-        .baby {
-            width: 100px;
-            height: 120px;
-            background: #ffe4c4;
-            border-radius: 50px 50px 40px 40px;
-            position: absolute;
-            bottom: 100px;
-            left: 350px;
-        }
-        
-        .baby::before {
-            content: '👶';
-            font-size: 70px;
-            position: absolute;
-            top: -20px;
-            left: 10px;
-        }
-        
-        .mom {
-            font-size: 100px;
-            position: absolute;
-            bottom: 100px;
-            left: 200px;
-        }
-        
-        .hospital {
-            position: absolute;
-            bottom: 200px;
-            left: 100px;
-            font-size: 150px;
-        }
-        
-        .car {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            font-size: 80px;
-            transition: left 10s linear;
-        }
-        
-        .house {
-            position: absolute;
-            bottom: 150px;
-            right: 50px;
-            font-size: 120px;
         }
         
         #ui {
@@ -154,25 +99,106 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
         
-        #speech-bubble {
+        #start-screen {
             position: absolute;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            display: none;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
         }
         
-        #speech-bubble::after {
-            content: '';
+        #start-screen h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 50px;
+            color: white;
+            text-shadow: 3px 3px 0 #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        #start-screen p {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        #race-start {
             position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 10px solid transparent;
-            border-top-color: white;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 150;
+        }
+        
+        #race-start h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 40px;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        #race-start p {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        button {
+            font-family: 'Fredoka One', cursive;
+            font-size: 24px;
+            padding: 15px 40px;
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2eaf9f;
+            transition: transform 0.1s;
+        }
+        
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #2eaf9f;
+        }
+        
+        #age-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+        
+        #age-screen h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 50px;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        #age-screen p {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 30px;
         }
         
         .birthday-overlay {
@@ -201,158 +227,99 @@
             color: #666;
         }
         
-        .confetti {
+        #message {
             position: absolute;
-            font-size: 30px;
-            animation: fall 2s linear infinite;
-        }
-        
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
-        }
-        
-        #start-screen, #age-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-        }
-        
-        #start-screen h1, #age-screen h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 50px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: white;
-            text-shadow: 3px 3px 0 #ff6b6b;
-            margin-bottom: 20px;
-        }
-        
-        #start-screen p {
-            font-size: 24px;
-            color: white;
-            margin-bottom: 30px;
-        }
-        
-        button {
-            font-family: 'Fredoka One', cursive;
-            font-size: 24px;
-            padding: 15px 40px;
-            background: #4ecdc4;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #2eaf9f;
-            transition: transform 0.1s;
-        }
-        
-        button:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 #2eaf9f;
-        }
-        
-        #age-screen {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-        
-        #age-screen h1 {
-            color: #ff6b6b;
-            text-shadow: none;
-        }
-        
-        .target {
-            position: absolute;
-            font-size: 40px;
-            animation: bounce 0.5s ease infinite alternate;
-        }
-        
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-        
-        .floor {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: #deb887;
-            border-top: 5px solid #c9a066;
-        }
-        
-        .ground {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: #7cfc00;
-            border-top: 5px solid #5cb85c;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            display: none;
+            z-index: 50;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 15px;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
+        <canvas id="raceCanvas" width="800" height="600"></canvas>
+        
         <div id="start-screen">
             <h1>🎮 Growing Up Game 🎮</h1>
-            <p>Grow from a baby to a kid by completing tasks!</p>
-            <p>🎯 Use joystick to move | ⭐ Complete tasks to grow</p>
-            <button onclick="startGame()">Let's Go! 🚗</button>
+            <p>Race to be the first to reach the egg!</p>
+            <p>🏊 Use arrow keys or joystick to swim</p>
+            <p>❌ Avoid the white blood cells!</p>
+            <button onclick="startRace()">Start Race! 🏊</button>
         </div>
         
-        <div id="age-screen" style="display: none;">
+        <div id="race-start">
+            <h1>🏊 Race to the Egg! 🏊</h1>
+            <p>You're a tiny sperm! Swim fast to reach the egg!</p>
+            <p>Use ⬅️ ➡️ ⬆️ ⬆️ arrow keys or joystick to move</p>
+            <p>Avoid the white blood cells! ❌</p>
+            <button onclick="startRace()">GO! 🏊</button>
+        </div>
+        
+        <div id="age-screen">
             <h1 id="age-text">Happy 1st Birthday! 🎂</h1>
             <p id="age-subtitle">You learned to say "MAMA"!</p>
             <button onclick="continueGame()">Continue ▶</button>
         </div>
         
-        <div id="scene">
-            <div id="ui">
-                <div id="stats">
-                    <div class="stat">🎂 Age: <span id="age">0</span></div>
-                    <div class="stat">⭐ Tasks: <span id="tasks">0</span>/5</div>
-                </div>
+        <div id="ui" style="display: none;">
+            <div id="stats">
+                <div class="stat">🎂 Age: <span id="age">0</span></div>
+                <div class="stat">⭐ Tasks: <span id="tasks">0</span>/5</div>
             </div>
-            
-            <div class="floor"></div>
-            
-            <div id="hospital" class="hospital">🏥</div>
-            <div id="mom" class="mom">👩</div>
-            <div id="baby" class="baby"></div>
-            <div id="car" class="car">🚗</div>
-            <div id="house" class="house">🏠</div>
-            <div id="target" class="target" style="display: none;">⭐</div>
-            
-            <div id="speech-bubble"></div>
-            
-            <div id="joystick" style="display: none;">
-                <div id="joystick-knob"></div>
-            </div>
-            
-            <div id="task-box">🎯 Task: Click "Let's Go!" to start!</div>
-            
-            <div class="birthday-overlay" id="birthday-overlay">
-                <h1>🎂 HAPPY BIRTHDAY! 🎂</h1>
-                <p>You turned <span id="bday-age">1</span> years old!</p>
-                <p id="bday-ability"></p>
-                <button onclick="closeBirthday()">Yay! 🎉</button>
-            </div>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div id="joystick" style="display: none;">
+            <div id="joystick-knob"></div>
+        </div>
+        
+        <div id="task-box" style="display: none;">🎯 Use joystick to find stars!</div>
+        
+        <div class="birthday-overlay" id="birthday-overlay">
+            <h1>🎂 HAPPY BIRTHDAY! 🎂</h1>
+            <p>You turned <span id="bday-age">1</span> years old!</p>
+            <p id="bday-ability"></p>
+            <button onclick="closeBirthday()">Yay! 🎉</button>
         </div>
     </div>
 
     <script>
+        // Race variables
+        const raceCanvas = document.getElementById('raceCanvas');
+        const raceCtx = raceCanvas.getContext('2d');
+        
+        let phase = 'start'; // start, race, birth, home, gameplay
         let age = 0;
         let tasks = 0;
-        let gameStarted = false;
-        let phase = 'start'; // start, hospital, car, home, gameplay
+        let currentTask = 0;
+        
+        // Race game vars
+        let raceRunning = false;
+        let raceWon = false;
+        let showBaby = false;
+        let babyDay = 0;
+        let babyStartTime = null;
+        let birthStartTime = null;
+        let momStartTime = null;
+        let birthPhase = 'growing';
+        
+        let playerSperm, egg, obstacles;
+        let progress = 0;
+        let keys = {};
+        let otherSperms = [];
+        
+        // Gameplay vars
         let babyX = 350;
         let babyY = 100;
         let targetX, targetY;
@@ -373,48 +340,550 @@
             { text: "Find the cookie!", emoji: "🍪" }
         ];
         
-        let currentTask = 0;
-        
-        function startGame() {
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('task-box').textContent = '🎯 Watch the birth scene...';
-            phase = 'hospital';
+        // Race game functions
+        function initRace() {
+            playerSperm = {
+                x: 400,
+                y: 550,
+                vx: 0,
+                vy: 0,
+                tailAngle: 0,
+                size: 15
+            };
+            egg = { x: 400, y: 80, radius: 35 };
+            obstacles = [];
+            otherSperms = [];
+            progress = 0;
+            raceWon = false;
+            showBaby = false;
+            babyDay = 0;
+            babyStartTime = null;
+            birthStartTime = null;
+            momStartTime = null;
+            birthPhase = 'growing';
+
+            // Create white blood cells (obstacles)
+            for (let i = 0; i < 10; i++) {
+                obstacles.push({
+                    x: Math.random() * 700 + 50,
+                    y: 150 + Math.random() * 400,
+                    radius: 20 + Math.random() * 15,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    type: 'whiteBloodCell'
+                });
+            }
             
-            setTimeout(() => {
-                document.getElementById('mom').innerHTML = '👩🤱';
-                showSpeech('mom', 'Aww, my beautiful baby! ❤️');
-            }, 2000);
-            
-            setTimeout(() => {
-                phase = 'car';
-                document.getElementById('mom').style.display = 'none';
-                document.getElementById('hospital').style.display = 'none';
-                document.getElementById('car').style.display = 'block';
-                document.getElementById('car').style.left = '0px';
-                document.getElementById('task-box').textContent = '🚗 Going home...';
-                
-                // Animate car across screen
-                let carPos = 0;
-                const carInterval = setInterval(() => {
-                    carPos += 8;
-                    document.getElementById('car').style.left = carPos + 'px';
-                    if (carPos > 800) {
-                        clearInterval(carInterval);
-                        setTimeout(() => {
-                            document.getElementById('car').style.display = 'none';
-                            document.getElementById('house').style.display = 'block';
-                            document.getElementById('baby').style.display = 'block';
-                            phase = 'home';
-                            document.getElementById('task-box').textContent = '🏠 You are home!';
-                            showSpeech('baby', 'Waaa waaa! 👶');
-                            setTimeout(() => {
-                                triggerBirthday(0);
-                            }, 2000);
-                        }, 500);
-                    }
-                }, 50);
-            }, 4000);
+            // Create other racer sperms
+            for (let i = 0; i < 7; i++) {
+                otherSperms.push({
+                    x: 300 + Math.random() * 200,
+                    y: 550,
+                    speed: 1.5 + Math.random() * 1.5,
+                    tailAngle: Math.random() * Math.PI * 2,
+                    size: 12 + Math.random() * 4
+                });
+            }
         }
+        
+        function drawRaceBackground() {
+            // Fallopian tube background
+            const gradient = raceCtx.createLinearGradient(0, 0, 0, 600);
+            gradient.addColorStop(0, '#ffb6c1');
+            gradient.addColorStop(0.5, '#ffc0cb');
+            gradient.addColorStop(1, '#ff69b4');
+            raceCtx.fillStyle = gradient;
+            raceCtx.fillRect(0, 0, 800, 600);
+
+            // Tube walls
+            raceCtx.strokeStyle = '#db7093';
+            raceCtx.lineWidth = 8;
+            raceCtx.beginPath();
+            raceCtx.moveTo(50, 0);
+            raceCtx.bezierCurveTo(30, 200, 60, 400, 50, 600);
+            raceCtx.stroke();
+            raceCtx.beginPath();
+            raceCtx.moveTo(750, 0);
+            raceCtx.bezierCurveTo(770, 200, 740, 400, 750, 600);
+            raceCtx.stroke();
+        }
+        
+        function drawSperm(x, y, tailAngle, size, isPlayer = false) {
+            raceCtx.save();
+            raceCtx.translate(x, y);
+            
+            // Tail
+            raceCtx.strokeStyle = '#ffb6c1';
+            raceCtx.lineWidth = 3;
+            raceCtx.beginPath();
+            raceCtx.moveTo(0, 0);
+            const tailWag = Math.sin(tailAngle) * 10;
+            raceCtx.quadraticCurveTo(tailWag, 15, tailWag * 1.5, 30);
+            raceCtx.stroke();
+
+            // Head (oval)
+            raceCtx.fillStyle = isPlayer ? '#fff' : '#ffe0e9';
+            raceCtx.beginPath();
+            raceCtx.ellipse(0, 0, size, size * 0.6, 0, 0, Math.PI * 2);
+            raceCtx.fill();
+            raceCtx.strokeStyle = '#ffb6c1';
+            raceCtx.lineWidth = 2;
+            raceCtx.stroke();
+
+            // Cute face
+            raceCtx.fillStyle = '#333';
+            raceCtx.beginPath();
+            raceCtx.arc(-4, -2, 2, 0, Math.PI * 2);
+            raceCtx.arc(4, -2, 2, 0, Math.PI * 2);
+            raceCtx.fill();
+            
+            if (isPlayer) {
+                raceCtx.strokeStyle = '#ff69b4';
+                raceCtx.lineWidth = 2;
+                raceCtx.beginPath();
+                raceCtx.arc(0, 3, 4, 0, Math.PI);
+                raceCtx.stroke();
+            }
+
+            raceCtx.restore();
+        }
+        
+        function drawEgg() {
+            if (!raceWon) {
+                raceCtx.save();
+                raceCtx.translate(egg.x, egg.y);
+
+                // Glow
+                const glow = raceCtx.createRadialGradient(0, 0, egg.radius * 0.5, 0, 0, egg.radius * 1.5);
+                glow.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                glow.addColorStop(1, 'rgba(255, 182, 193, 0)');
+                raceCtx.fillStyle = glow;
+                raceCtx.beginPath();
+                raceCtx.arc(0, 0, egg.radius * 1.5, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                // Egg
+                const eggGrad = raceCtx.createRadialGradient(-10, -10, 0, 0, 0, egg.radius);
+                eggGrad.addColorStop(0, '#fff5f5');
+                eggGrad.addColorStop(0.7, '#ffb6c1');
+                eggGrad.addColorStop(1, '#ff69b4');
+                raceCtx.fillStyle = eggGrad;
+                raceCtx.beginPath();
+                raceCtx.arc(0, 0, egg.radius, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                // Shine
+                raceCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                raceCtx.beginPath();
+                raceCtx.ellipse(-12, -12, 8, 5, -0.5, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                raceCtx.restore();
+            }
+        }
+        
+        function drawObstacles() {
+            obstacles.forEach(obs => {
+                raceCtx.save();
+                raceCtx.translate(obs.x, obs.y);
+
+                // White blood cell - bumpy circle
+                raceCtx.fillStyle = '#f0f0f0';
+                raceCtx.strokeStyle = '#ccc';
+                raceCtx.lineWidth = 2;
+                raceCtx.beginPath();
+                for (let i = 0; i < 8; i++) {
+                    const angle = (i / 8) * Math.PI * 2;
+                    const r = obs.radius + Math.sin(angle * 4 + Date.now() / 200) * 3;
+                    const x = Math.cos(angle) * r;
+                    const y = Math.sin(angle) * r;
+                    if (i === 0) raceCtx.moveTo(x, y);
+                    else raceCtx.lineTo(x, y);
+                }
+                raceCtx.closePath();
+                raceCtx.fill();
+                raceCtx.stroke();
+
+                raceCtx.restore();
+            });
+        }
+        
+        function drawBaby() {
+            const centerX = 400;
+            const centerY = 300;
+            
+            if (birthPhase === 'growing') {
+                // Uterus background
+                raceCtx.fillStyle = '#ffb6c1';
+                raceCtx.beginPath();
+                raceCtx.ellipse(centerX, centerY, 300, 250, 0, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                raceCtx.fillStyle = '#ffc0cb';
+                raceCtx.beginPath();
+                raceCtx.ellipse(centerX, centerY, 280, 230, 0, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                // Day indicator
+                raceCtx.fillStyle = '#ff1493';
+                raceCtx.font = 'bold 24px Comic Sans MS';
+                raceCtx.textAlign = 'center';
+                raceCtx.fillText(`Day ${Math.floor(babyDay)}`, centerX, 60);
+
+                const babyProgress = babyDay / 280;
+                
+                // Placenta
+                raceCtx.fillStyle = '#e8a0b0';
+                raceCtx.beginPath();
+                raceCtx.arc(centerX + 180, centerY, 60, 0, Math.PI * 2);
+                raceCtx.fill();
+                raceCtx.fillStyle = '#d490a0';
+                raceCtx.beginPath();
+                raceCtx.arc(centerX + 180, centerY, 40, 0, Math.PI * 2);
+                raceCtx.fill();
+
+                // Umbilical cord
+                raceCtx.strokeStyle = '#ff69b4';
+                raceCtx.lineWidth = 6;
+                raceCtx.beginPath();
+                raceCtx.moveTo(centerX + 180, centerY);
+                raceCtx.quadraticCurveTo(centerX + 100, centerY + 50, centerX, centerY);
+                raceCtx.stroke();
+
+                let babySize = 5 + babyProgress * 60;
+
+                if (babyProgress < 0.3) {
+                    raceCtx.fillStyle = '#ffb6c1';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY - 10, babySize * 0.6, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY + 15, babySize * 0.5, 0, Math.PI * 2);
+                    raceCtx.fill();
+                } else if (babyProgress < 0.6) {
+                    raceCtx.fillStyle = '#ffb6c1';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY - 20, babySize * 0.5, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.beginPath();
+                    raceCtx.ellipse(centerX, centerY + 20, babySize * 0.4, babySize * 0.5, 0, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.fillStyle = '#333';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX - 8, centerY - 25, 3, 0, Math.PI * 2);
+                    raceCtx.arc(centerX + 8, centerY - 25, 3, 0, Math.PI * 2);
+                    raceCtx.fill();
+                } else {
+                    raceCtx.fillStyle = '#ffb6c1';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY - 30, babySize * 0.45, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.fillStyle = '#8B4513';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY - 45, 8, Math.PI, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.beginPath();
+                    raceCtx.ellipse(centerX, centerY + 20, babySize * 0.35, babySize * 0.45, 0, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.fillStyle = '#333';
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX - 10, centerY - 35, 4, 0, Math.PI * 2);
+                    raceCtx.arc(centerX + 10, centerY - 35, 4, 0, Math.PI * 2);
+                    raceCtx.fill();
+                    raceCtx.strokeStyle = '#ff69b4';
+                    raceCtx.lineWidth = 2;
+                    raceCtx.beginPath();
+                    raceCtx.arc(centerX, centerY - 28, 8, 0.2, Math.PI - 0.2);
+                    raceCtx.stroke();
+                }
+
+                raceCtx.fillStyle = '#ff1493';
+                raceCtx.font = '20px Comic Sans MS';
+                if (babyDay < 30) {
+                    raceCtx.fillText("The miracle of life begins!", centerX, 520);
+                } else if (babyDay < 90) {
+                    raceCtx.fillText("All the parts are forming!", centerX, 520);
+                } else if (babyDay < 180) {
+                    raceCtx.fillText("Baby is growing bigger!", centerX, 520);
+                } else if (babyDay < 250) {
+                    raceCtx.fillText("Almost ready to meet the world!", centerX, 520);
+                } else {
+                    raceCtx.fillText("Baby is almost ready! 🎉", centerX, 520);
+                }
+
+            } else if (birthPhase === 'born') {
+                const birthElapsed = (Date.now() - birthStartTime) / 1000;
+                const birthProgress = Math.min(1, birthElapsed / 2);
+                
+                raceCtx.fillStyle = '#8B4557';
+                raceCtx.fillRect(0, 0, 800, 600);
+                
+                raceCtx.fillStyle = '#5a2a3a';
+                raceCtx.beginPath();
+                raceCtx.ellipse(400, 600, 80, 150, 0, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                const babyY = 200 + birthProgress * 280;
+                const babySize = 35;
+                
+                raceCtx.fillStyle = '#ffb6c1';
+                raceCtx.beginPath();
+                raceCtx.arc(400, babyY, babySize, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.beginPath();
+                raceCtx.ellipse(400, babyY + 45, 25, 30, 0, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.fillStyle = '#333';
+                raceCtx.beginPath();
+                raceCtx.arc(390, babyY - 5, 4, 0, Math.PI * 2);
+                raceCtx.arc(410, babyY - 5, 4, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.strokeStyle = '#ff69b4';
+                raceCtx.lineWidth = 2;
+                raceCtx.beginPath();
+                raceCtx.arc(400, babyY + 2, 6, 0.2, Math.PI - 0.2);
+                raceCtx.stroke();
+                
+                raceCtx.fillStyle = '#fff';
+                raceCtx.font = 'bold 28px Comic Sans MS';
+                raceCtx.textAlign = 'center';
+                if (birthProgress < 1) {
+                    raceCtx.fillText("It's a baby! 👶", centerX, 80);
+                } else {
+                    birthPhase = 'momHolding';
+                    momStartTime = Date.now();
+                }
+                
+            } else if (birthPhase === 'momHolding') {
+                const momElapsed = (Date.now() - momStartTime) / 1000;
+                
+                const gradient = raceCtx.createLinearGradient(0, 0, 0, 600);
+                gradient.addColorStop(0, '#ffe4e1');
+                gradient.addColorStop(1, '#ffb6c1');
+                raceCtx.fillStyle = gradient;
+                raceCtx.fillRect(0, 0, 800, 600);
+                
+                const momX = 400;
+                const momY = 350;
+                
+                raceCtx.fillStyle = '#ff69b4';
+                raceCtx.beginPath();
+                raceCtx.moveTo(momX - 60, momY + 80);
+                raceCtx.lineTo(momX - 100, 600);
+                raceCtx.lineTo(momX + 100, 600);
+                raceCtx.lineTo(momX + 60, momY + 80);
+                raceCtx.closePath();
+                raceCtx.fill();
+                
+                raceCtx.strokeStyle = '#ffdbac';
+                raceCtx.lineWidth = 20;
+                raceCtx.lineCap = 'round';
+                raceCtx.beginPath();
+                raceCtx.moveTo(momX - 50, momY + 30);
+                raceCtx.lineTo(momX - 25, momY + 80);
+                raceCtx.moveTo(momX + 50, momY + 30);
+                raceCtx.lineTo(momX + 25, momY + 80);
+                raceCtx.stroke();
+                
+                const babyBob = Math.sin(momElapsed * 3) * 5;
+                
+                raceCtx.fillStyle = '#ffb6c1';
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY + 70 + babyBob, 30, 0, Math.PI * 2);
+                raceCtx.fill();
+                raceCtx.beginPath();
+                raceCtx.ellipse(momX, momY + 100 + babyBob, 20, 25, 0, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.fillStyle = '#333';
+                raceCtx.beginPath();
+                raceCtx.arc(momX - 8, momY + 65 + babyBob, 3, 0, Math.PI * 2);
+                raceCtx.arc(momX + 8, momY + 65 + babyBob, 3, 0, Math.PI * 2);
+                raceCtx.fill();
+                raceCtx.strokeStyle = '#ff69b4';
+                raceCtx.lineWidth = 2;
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY + 75 + babyBob, 5, 0, Math.PI);
+                raceCtx.stroke();
+                
+                raceCtx.fillStyle = '#87ceeb';
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY + 45 + babyBob, 15, Math.PI, 0);
+                raceCtx.fill();
+                
+                raceCtx.fillStyle = '#ffdbac';
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY - 30, 35, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.fillStyle = '#333';
+                raceCtx.beginPath();
+                raceCtx.arc(momX - 12, momY - 35, 4, 0, Math.PI * 2);
+                raceCtx.arc(momX + 12, momY - 35, 4, 0, Math.PI * 2);
+                raceCtx.fill();
+                
+                raceCtx.strokeStyle = '#ff69b4';
+                raceCtx.lineWidth = 3;
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY - 25, 12, 0.2, Math.PI - 0.2);
+                raceCtx.stroke();
+                
+                raceCtx.fillStyle = '#8B4513';
+                raceCtx.beginPath();
+                raceCtx.arc(momX, momY - 45, 30, Math.PI, 0);
+                raceCtx.fill();
+                
+                raceCtx.fillStyle = '#ff69b4';
+                raceCtx.font = '24px Arial';
+                const heart1Y = 150 - (momElapsed * 30) % 100;
+                raceCtx.fillText('💕', 280, heart1Y);
+                raceCtx.fillText('💗', 500, heart1Y + 20);
+                
+                raceCtx.fillStyle = '#ff1493';
+                raceCtx.font = 'bold 32px Comic Sans MS';
+                raceCtx.textAlign = 'center';
+                raceCtx.fillText("Welcome, baby! 🎉", centerX, 550);
+                raceCtx.font = '20px Comic Sans MS';
+                raceCtx.fillText("The mom is greeting her little one! 💖", centerX, 580);
+            }
+        }
+        
+        function updateRace() {
+            if (phase !== 'race') return;
+
+            if (showBaby) {
+                if (babyDay < 280 && babyStartTime) {
+                    const elapsed = (Date.now() - babyStartTime) / 1000;
+                    babyDay = Math.min(280, (elapsed / 10) * 280);
+                    if (babyDay >= 280 && birthPhase === 'growing') {
+                        birthPhase = 'born';
+                        birthStartTime = Date.now();
+                    }
+                }
+
+                drawBaby();
+                requestAnimationFrame(updateRace);
+                return;
+            }
+
+            // Move player sperm
+            const speed = 5;
+            if (keys['ArrowUp'] || keys['w']) playerSperm.vy = -speed;
+            else if (keys['ArrowDown'] || keys['s']) playerSperm.vy = speed;
+            else playerSperm.vy *= 0.9;
+
+            if (keys['ArrowLeft'] || keys['a']) playerSperm.vx = -speed;
+            else if (keys['ArrowRight'] || keys['d']) playerSperm.vx = speed;
+            else playerSperm.vx *= 0.9;
+
+            playerSperm.x += playerSperm.vx;
+            playerSperm.y += playerSperm.vy;
+            playerSperm.x = Math.max(60, Math.min(740, playerSperm.x));
+            playerSperm.y = Math.max(20, Math.min(580, playerSperm.y));
+            
+            playerSperm.tailAngle += 0.5;
+
+            // Move other sperms
+            otherSperms.forEach(sperm => {
+                sperm.y -= sperm.speed;
+                sperm.x += (Math.random() - 0.5) * 2;
+                sperm.x = Math.max(60, Math.min(740, sperm.x));
+                sperm.tailAngle += 0.5;
+                
+                // Check if other sperm reached egg
+                const dx = sperm.x - egg.x;
+                const dy = sperm.y - egg.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < egg.radius + sperm.size && !raceWon) {
+                    showMessage("Someone else won! You came in second! 😅");
+                    raceWon = true;
+                    setTimeout(() => {
+                        showBaby = true;
+                        if (!babyStartTime) babyStartTime = Date.now();
+                    }, 2000);
+                }
+            });
+
+            // Move obstacles
+            obstacles.forEach(obs => {
+                obs.x += obs.vx;
+                obs.y += obs.vy;
+                if (obs.x < 60 || obs.x > 740) obs.vx *= -1;
+                if (obs.y < 100 || obs.y > 580) obs.vy *= -1;
+
+                const dx = playerSperm.x - obs.x;
+                const dy = playerSperm.y - obs.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < obs.radius + playerSperm.size) {
+                    playerSperm.x = 400;
+                    playerSperm.y = 550;
+                    playerSperm.vx = 0;
+                    playerSperm.vy = 0;
+                    showMessage('Ouch! White blood cell! Try again! 💥');
+                }
+            });
+
+            // Check if reached egg
+            const dx = playerSperm.x - egg.x;
+            const dy = playerSperm.y - egg.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < egg.radius + playerSperm.size + 10 && !raceWon) {
+                raceWon = true;
+                showBaby = true;
+                if (!babyStartTime) babyStartTime = Date.now();
+                showMessage('🎉 YOU WON! 🎉\nYou reached the egg first!');
+                setTimeout(() => {
+                    document.getElementById('message').style.display = 'none';
+                }, 3000);
+            }
+
+            progress = Math.min(100, Math.floor((1 - (playerSperm.y / 550)) * 100));
+
+            drawRaceBackground();
+            drawEgg();
+            drawObstacles();
+            
+            otherSperms.forEach(sperm => {
+                drawSperm(sperm.x, sperm.y, sperm.tailAngle, sperm.size, false);
+            });
+            
+            drawSperm(playerSperm.x, playerSperm.y, playerSperm.tailAngle, playerSperm.size, true);
+
+            requestAnimationFrame(updateRace);
+        }
+        
+        function showMessage(text) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 2500);
+        }
+        
+        function startRace() {
+            document.getElementById('start-screen').style.display = 'none';
+            phase = 'race';
+            raceRunning = true;
+            initRace();
+            updateRace();
+        }
+        
+        // Keyboard controls for race
+        document.addEventListener('keydown', e => {
+            keys[e.key] = true;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('keyup', e => keys[e.key] = false);
+
+        // Now the growing up gameplay part
+        let gameMode = 'race'; // race or gameplay
         
         function triggerBirthday(birthAge) {
             age = birthAge;
@@ -436,18 +905,17 @@
             document.getElementById('birthday-overlay').style.display = 'none';
             
             if (age === 1) {
-                showSpeech('baby', 'Mama! 💕');
-                setTimeout(() => triggerBirthday(1.5), 2000);
+                setTimeout(() => triggerBirthday(1.5), 1000);
             } else if (age === 1.5) {
-                showSpeech('baby', 'Dada! 💕');
-                setTimeout(() => triggerBirthday(2), 2000);
+                setTimeout(() => triggerBirthday(2), 1000);
             } else if (age === 2) {
-                document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
-                document.getElementById('joystick').style.display = 'block';
-                document.getElementById('baby').style.display = 'block';
-                document.getElementById('house').style.display = 'none';
-                document.getElementById('floor').style.display = 'block';
+                // Switch to gameplay mode
                 phase = 'gameplay';
+                document.getElementById('raceCanvas').style.display = 'none';
+                document.getElementById('ui').style.display = 'flex';
+                document.getElementById('task-box').style.display = 'block';
+                document.getElementById('joystick').style.display = 'block';
+                document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
                 spawnTarget();
             } else {
                 spawnTarget();
@@ -458,30 +926,21 @@
             document.getElementById('age-screen').style.display = 'none';
         }
         
-        function showSpeech(who, text) {
-            const bubble = document.getElementById('speech-bubble');
-            bubble.textContent = text;
-            bubble.style.display = 'block';
-            
-            const baby = document.getElementById('baby');
-            const rect = baby.getBoundingClientRect();
-            const container = document.getElementById('game-container').getBoundingClientRect();
-            
-            bubble.style.left = (rect.left - container.left + 30) + 'px';
-            bubble.style.top = (rect.top - container.top - 50) + 'px';
-            
-            setTimeout(() => {
-                bubble.style.display = 'none';
-            }, 2000);
-        }
-        
         function spawnTarget() {
             const target = document.getElementById('target');
-            target.style.display = 'block';
+            if (!target) {
+                const t = document.createElement('div');
+                t.id = 'target';
+                t.className = 'target';
+                t.style.cssText = 'position:absolute;font-size:40px;animation:bounce 0.5s ease infinite alternate;display:none;';
+                document.getElementById('game-container').appendChild(t);
+            }
+            const targetEl = document.getElementById('target');
+            targetEl.style.display = 'block';
             targetX = Math.random() * 700 + 50;
             targetY = Math.random() * 400 + 100;
-            target.style.left = targetX + 'px';
-            target.style.top = targetY + 'px';
+            targetEl.style.left = targetX + 'px';
+            targetEl.style.top = targetY + 'px';
             
             const task = tasksList[currentTask % tasksList.length];
             document.getElementById('task-box').textContent = `🎯 ${task.text} ${task.emoji}`;
@@ -491,8 +950,10 @@
         const joystick = document.getElementById('joystick');
         const knob = document.getElementById('joystick-knob');
         
-        joystick.addEventListener('mousedown', startJoystick);
-        joystick.addEventListener('touchstart', startJoystick);
+        if (joystick) {
+            joystick.addEventListener('mousedown', startJoystick);
+            joystick.addEventListener('touchstart', startJoystick);
+        }
         
         function startJoystick(e) {
             e.preventDefault();
@@ -545,14 +1006,36 @@
             document.removeEventListener('touchend', stopJoystick);
         }
         
-        // Keyboard controls
-        const keys = {};
-        document.addEventListener('keydown', e => keys[e.key] = true);
-        document.addEventListener('keyup', e => keys[e.key] = false);
+        // Add game area elements
+        function initGameplay() {
+            const container = document.getElementById('game-container');
+            
+            // Add floor
+            const floor = document.createElement('div');
+            floor.id = 'floor';
+            floor.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:100px;background:#deb887;border-top:5px solid #c9a066;';
+            container.appendChild(floor);
+            
+            // Add baby
+            const baby = document.createElement('div');
+            baby.id = 'baby';
+            baby.style.cssText = 'position:absolute;font-size:70px;left:350px;top:400px;';
+            baby.textContent = '👶';
+            container.appendChild(baby);
+            
+            // Add house
+            const house = document.createElement('div');
+            house.id = 'house';
+            house.style.cssText = 'position:absolute;bottom:150px;right:50px;font-size:120px;';
+            house.textContent = '🏠';
+            container.appendChild(house);
+        }
         
-        function update() {
+        initGameplay();
+        
+        function updateGameplay() {
             if (phase !== 'gameplay') {
-                requestAnimationFrame(update);
+                requestAnimationFrame(updateGameplay);
                 return;
             }
             
@@ -568,7 +1051,6 @@
             babyX += joystickDX;
             babyY += joystickDY;
             
-            // Boundaries
             babyX = Math.max(0, Math.min(700, babyX));
             babyY = Math.max(50, Math.min(450, babyY));
             
@@ -576,39 +1058,57 @@
             baby.style.left = babyX + 'px';
             baby.style.top = babyY + 'px';
             
-            // Check collision with target
             const target = document.getElementById('target');
-            const targetRect = target.getBoundingClientRect();
-            const babyRect = baby.getBoundingClientRect();
-            
-            if (!(babyRect.right < targetRect.left || 
-                  babyRect.left > targetRect.right || 
-                  babyRect.bottom < targetRect.top || 
-                  babyRect.top > targetRect.bottom)) {
+            if (target && target.style.display !== 'none') {
+                const targetRect = target.getBoundingClientRect();
+                const babyRect = baby.getBoundingClientRect();
+                const containerRect = document.getElementById('game-container').getBoundingClientRect();
                 
-                // Caught the target!
-                tasks++;
-                currentTask++;
-                document.getElementById('tasks').textContent = tasks;
+                const tLeft = parseFloat(target.style.left);
+                const tTop = parseFloat(target.style.top);
                 
-                // Show happy baby
-                showSpeech('baby', 'Yay! ⭐');
-                
-                if (tasks >= 5) {
-                    tasks = 0;
-                    document.getElementById('tasks').textContent = 0;
-                    age += 0.5;
-                    document.getElementById('age').textContent = age;
-                    triggerBirthday(age);
-                } else {
-                    spawnTarget();
+                if (!(babyRect.right < tLeft || 
+                      babyRect.left > tLeft + 40 || 
+                      babyRect.bottom < tTop || 
+                      babyRect.top > tTop + 40)) {
+                    
+                    tasks++;
+                    currentTask++;
+                    document.getElementById('tasks').textContent = tasks;
+                    
+                    showMessage('Yay! ⭐');
+                    
+                    if (tasks >= 5) {
+                        tasks = 0;
+                        document.getElementById('tasks').textContent = 0;
+                        age += 0.5;
+                        document.getElementById('age').textContent = age;
+                        triggerBirthday(age);
+                    } else {
+                        spawnTarget();
+                    }
                 }
             }
             
-            requestAnimationFrame(update);
+            requestAnimationFrame(updateGameplay);
         }
         
-        update();
+        updateGameplay();
+        
+        // Add CSS for target
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                from { transform: translateY(0); }
+                to { transform: translateY(-10px); }
+            }
+            .target {
+                position: absolute;
+                font-size: 40px;
+                animation: bounce 0.5s ease infinite alternate;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
