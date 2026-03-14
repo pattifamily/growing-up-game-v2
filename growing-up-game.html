@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growing Up Game 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+        }
+        
+        #game-container {
+            width: 800px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .character {
+            position: absolute;
+            font-size: 80px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+        
+        .baby {
+            width: 100px;
+            height: 120px;
+            background: #ffe4c4;
+            border-radius: 50px 50px 40px 40px;
+            position: absolute;
+            bottom: 100px;
+            left: 350px;
+        }
+        
+        .baby::before {
+            content: '👶';
+            font-size: 70px;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+        }
+        
+        .mom {
+            font-size: 100px;
+            position: absolute;
+            bottom: 100px;
+            left: 200px;
+        }
+        
+        .hospital {
+            position: absolute;
+            bottom: 200px;
+            left: 100px;
+            font-size: 150px;
+        }
+        
+        .car {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            font-size: 80px;
+            transition: left 10s linear;
+        }
+        
+        .house {
+            position: absolute;
+            bottom: 150px;
+            right: 50px;
+            font-size: 120px;
+        }
+        
+        #ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #ff6b6b;
+        }
+        
+        #stats {
+            display: flex;
+            gap: 20px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
+        }
+        
+        .stat {
+            background: #fff5f5;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #ff6b6b;
+        }
+        
+        #task-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 15px 30px;
+            border-radius: 15px;
+            border: 3px solid #4ecdc4;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        #joystick {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.5);
+        }
+        
+        #joystick-knob {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        #speech-bubble {
+            position: absolute;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        #speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 10px solid transparent;
+            border-top-color: white;
+        }
+        
+        .birthday-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .birthday-overlay h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 60px;
+            color: #ff6b6b;
+            margin: 0;
+        }
+        
+        .birthday-overlay p {
+            font-size: 30px;
+            color: #666;
+        }
+        
+        .confetti {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 2s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
+        }
+        
+        #start-screen, #age-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+        
+        #start-screen h1, #age-screen h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 50px;
+            color: white;
+            text-shadow: 3px 3px 0 #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        #start-screen p {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            font-family: 'Fredoka One', cursive;
+            font-size: 24px;
+            padding: 15px 40px;
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2eaf9f;
+            transition: transform 0.1s;
+        }
+        
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #2eaf9f;
+        }
+        
+        #age-screen {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        #age-screen h1 {
+            color: #ff6b6b;
+            text-shadow: none;
+        }
+        
+        .target {
+            position: absolute;
+            font-size: 40px;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        
+        .floor {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: #deb887;
+            border-top: 5px solid #c9a066;
+        }
+        
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #7cfc00;
+            border-top: 5px solid #5cb85c;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen">
+            <h1>🎮 Growing Up Game 🎮</h1>
+            <p>Grow from a baby to a kid by completing tasks!</p>
+            <p>🎯 Use joystick to move | ⭐ Complete tasks to grow</p>
+            <button onclick="startGame()">Let's Go! 🚗</button>
+        </div>
+        
+        <div id="age-screen" style="display: none;">
+            <h1 id="age-text">Happy 1st Birthday! 🎂</h1>
+            <p id="age-subtitle">You learned to say "MAMA"!</p>
+            <button onclick="continueGame()">Continue ▶</button>
+        </div>
+        
+        <div id="scene">
+            <div id="ui">
+                <div id="stats">
+                    <div class="stat">🎂 Age: <span id="age">0</span></div>
+                    <div class="stat">⭐ Tasks: <span id="tasks">0</span>/5</div>
+                </div>
+            </div>
+            
+            <div class="floor"></div>
+            
+            <div id="hospital" class="hospital">🏥</div>
+            <div id="mom" class="mom">👩</div>
+            <div id="baby" class="baby"></div>
+            <div id="car" class="car">🚗</div>
+            <div id="house" class="house">🏠</div>
+            <div id="target" class="target" style="display: none;">⭐</div>
+            
+            <div id="speech-bubble"></div>
+            
+            <div id="joystick" style="display: none;">
+                <div id="joystick-knob"></div>
+            </div>
+            
+            <div id="task-box">🎯 Task: Click "Let's Go!" to start!</div>
+            
+            <div class="birthday-overlay" id="birthday-overlay">
+                <h1>🎂 HAPPY BIRTHDAY! 🎂</h1>
+                <p>You turned <span id="bday-age">1</span> years old!</p>
+                <p id="bday-ability"></p>
+                <button onclick="closeBirthday()">Yay! 🎉</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let age = 0;
+        let tasks = 0;
+        let gameStarted = false;
+        let phase = 'start'; // start, hospital, car, home, gameplay
+        let babyX = 350;
+        let babyY = 100;
+        let targetX, targetY;
+        let joystickActive = false;
+        let joystickDX = 0;
+        let joystickDY = 0;
+        
+        const tasksList = [
+            { text: "Find the teddy bear!", emoji: "🧸" },
+            { text: "Find the ball!", emoji: "⚽" },
+            { text: "Find the bottle!", emoji: "🍼" },
+            { text: "Find the rattle!", emoji: "🎂" },
+            { text: "Find the blocks!", emoji: "🧱" },
+            { text: "Find the spoon!", emoji: "🥄" },
+            { text: "Find the book!", emoji: "📚" },
+            { text: "Find the balloon!", emoji: "🎈" },
+            { text: "Find the duck!", emoji: "🦆" },
+            { text: "Find the cookie!", emoji: "🍪" }
+        ];
+        
+        let currentTask = 0;
+        
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('task-box').textContent = '🎯 Watch the birth scene...';
+            phase = 'hospital';
+            
+            setTimeout(() => {
+                document.getElementById('mom').innerHTML = '👩🤱';
+                showSpeech('mom', 'Aww, my beautiful baby! ❤️');
+            }, 2000);
+            
+            setTimeout(() => {
+                phase = 'car';
+                document.getElementById('mom').style.display = 'none';
+                document.getElementById('hospital').style.display = 'none';
+                document.getElementById('car').style.display = 'block';
+                document.getElementById('car').style.left = '0px';
+                document.getElementById('task-box').textContent = '🚗 Going home...';
+                
+                // Animate car across screen
+                let carPos = 0;
+                const carInterval = setInterval(() => {
+                    carPos += 8;
+                    document.getElementById('car').style.left = carPos + 'px';
+                    if (carPos > 800) {
+                        clearInterval(carInterval);
+                        setTimeout(() => {
+                            document.getElementById('car').style.display = 'none';
+                            document.getElementById('house').style.display = 'block';
+                            document.getElementById('baby').style.display = 'block';
+                            phase = 'home';
+                            document.getElementById('task-box').textContent = '🏠 You are home!';
+                            showSpeech('baby', 'Waaa waaa! 👶');
+                            setTimeout(() => {
+                                triggerBirthday(0);
+                            }, 2000);
+                        }, 500);
+                    }
+                }, 50);
+            }, 4000);
+        }
+        
+        function triggerBirthday(birthAge) {
+            age = birthAge;
+            document.getElementById('age').textContent = age;
+            document.getElementById('birthday-overlay').style.display = 'flex';
+            document.getElementById('bday-age').textContent = age;
+            
+            const abilities = [
+                'You said your first word: MAMA!',
+                'You said your first word: DADA!',
+                'You took your first steps!',
+                'You learned to run!',
+                'You learned to jump!'
+            ];
+            document.getElementById('bday-ability').textContent = abilities[age - 1] || 'You grew bigger!';
+        }
+        
+        function closeBirthday() {
+            document.getElementById('birthday-overlay').style.display = 'none';
+            
+            if (age === 1) {
+                showSpeech('baby', 'Mama! 💕');
+                setTimeout(() => triggerBirthday(1.5), 2000);
+            } else if (age === 1.5) {
+                showSpeech('baby', 'Dada! 💕');
+                setTimeout(() => triggerBirthday(2), 2000);
+            } else if (age === 2) {
+                document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
+                document.getElementById('joystick').style.display = 'block';
+                document.getElementById('baby').style.display = 'block';
+                document.getElementById('house').style.display = 'none';
+                document.getElementById('floor').style.display = 'block';
+                phase = 'gameplay';
+                spawnTarget();
+            } else {
+                spawnTarget();
+            }
+        }
+        
+        function continueGame() {
+            document.getElementById('age-screen').style.display = 'none';
+        }
+        
+        function showSpeech(who, text) {
+            const bubble = document.getElementById('speech-bubble');
+            bubble.textContent = text;
+            bubble.style.display = 'block';
+            
+            const baby = document.getElementById('baby');
+            const rect = baby.getBoundingClientRect();
+            const container = document.getElementById('game-container').getBoundingClientRect();
+            
+            bubble.style.left = (rect.left - container.left + 30) + 'px';
+            bubble.style.top = (rect.top - container.top - 50) + 'px';
+            
+            setTimeout(() => {
+                bubble.style.display = 'none';
+            }, 2000);
+        }
+        
+        function spawnTarget() {
+            const target = document.getElementById('target');
+            target.style.display = 'block';
+            targetX = Math.random() * 700 + 50;
+            targetY = Math.random() * 400 + 100;
+            target.style.left = targetX + 'px';
+            target.style.top = targetY + 'px';
+            
+            const task = tasksList[currentTask % tasksList.length];
+            document.getElementById('task-box').textContent = `🎯 ${task.text} ${task.emoji}`;
+        }
+        
+        // Joystick controls
+        const joystick = document.getElementById('joystick');
+        const knob = document.getElementById('joystick-knob');
+        
+        joystick.addEventListener('mousedown', startJoystick);
+        joystick.addEventListener('touchstart', startJoystick);
+        
+        function startJoystick(e) {
+            e.preventDefault();
+            joystickActive = true;
+            document.addEventListener('mousemove', moveJoystick);
+            document.addEventListener('touchmove', moveJoystick);
+            document.addEventListener('mouseup', stopJoystick);
+            document.addEventListener('touchend', stopJoystick);
+        }
+        
+        function moveJoystick(e) {
+            if (!joystickActive) return;
+            
+            const rect = joystick.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            let clientX, clientY;
+            if (e.touches) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            let dx = clientX - centerX;
+            let dy = clientY - centerY;
+            
+            const maxDist = 30;
+            const dist = Math.min(Math.sqrt(dx*dx + dy*dy), maxDist);
+            const angle = Math.atan2(dy, dx);
+            
+            knob.style.left = (30 + Math.cos(angle) * dist) + 'px';
+            knob.style.top = (30 + Math.sin(angle) * dist) + 'px';
+            
+            joystickDX = (dx / maxDist) * 3;
+            joystickDY = (dy / maxDist) * 3;
+        }
+        
+        function stopJoystick() {
+            joystickActive = false;
+            joystickDX = 0;
+            joystickDY = 0;
+            knob.style.left = '30px';
+            knob.style.top = '30px';
+            document.removeEventListener('mousemove', moveJoystick);
+            document.removeEventListener('touchmove', moveJoystick);
+            document.removeEventListener('mouseup', stopJoystick);
+            document.removeEventListener('touchend', stopJoystick);
+        }
+        
+        // Keyboard controls
+        const keys = {};
+        document.addEventListener('keydown', e => keys[e.key] = true);
+        document.addEventListener('keyup', e => keys[e.key] = false);
+        
+        function update() {
+            if (phase !== 'gameplay') {
+                requestAnimationFrame(update);
+                return;
+            }
+            
+            // Keyboard override
+            if (keys['ArrowLeft'] || keys['a']) joystickDX = -3;
+            else if (keys['ArrowRight'] || keys['d']) joystickDX = 3;
+            else if (!joystickActive) joystickDX = 0;
+            
+            if (keys['ArrowUp'] || keys['w']) joystickDY = -3;
+            else if (keys['ArrowDown'] || keys['s']) joystickDY = 3;
+            else if (!joystickActive) joystickDY = 0;
+            
+            babyX += joystickDX;
+            babyY += joystickDY;
+            
+            // Boundaries
+            babyX = Math.max(0, Math.min(700, babyX));
+            babyY = Math.max(50, Math.min(450, babyY));
+            
+            const baby = document.getElementById('baby');
+            baby.style.left = babyX + 'px';
+            baby.style.top = babyY + 'px';
+            
+            // Check collision with target
+            const target = document.getElementById('target');
+            const targetRect = target.getBoundingClientRect();
+            const babyRect = baby.getBoundingClientRect();
+            
+            if (!(babyRect.right < targetRect.left || 
+                  babyRect.left > targetRect.right || 
+                  babyRect.bottom < targetRect.top || 
+                  babyRect.top > targetRect.bottom)) {
+                
+                // Caught the target!
+                tasks++;
+                currentTask++;
+                document.getElementById('tasks').textContent = tasks;
+                
+                // Show happy baby
+                showSpeech('baby', 'Yay! ⭐');
+                
+                if (tasks >= 5) {
+                    tasks = 0;
+                    document.getElementById('tasks').textContent = 0;
+                    age += 0.5;
+                    document.getElementById('age').textContent = age;
+                    triggerBirthday(age);
+                } else {
+                    spawnTarget();
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        update();
+    </script>
+</body>
+</html>
