@@ -313,6 +313,7 @@
         let babyStartTime = null;
         let birthStartTime = null;
         let momStartTime = null;
+        let homeStartTime = null;
         let birthPhase = 'growing';
         
         let playerSperm, egg, obstacles;
@@ -651,6 +652,11 @@
             } else if (birthPhase === 'momHolding') {
                 const momElapsed = (Date.now() - momStartTime) / 1000;
                 
+                // Auto-transition to going home after 5 seconds
+                if (momElapsed > 5 && !homeStartTime) {
+                    homeStartTime = Date.now();
+                }
+                
                 const gradient = raceCtx.createLinearGradient(0, 0, 0, 600);
                 gradient.addColorStop(0, '#ffe4e1');
                 gradient.addColorStop(1, '#ffb6c1');
@@ -739,6 +745,89 @@
                 raceCtx.fillText("Welcome, baby! 🎉", centerX, 550);
                 raceCtx.font = '20px Comic Sans MS';
                 raceCtx.fillText("The mom is greeting her little one! 💖", centerX, 580);
+                
+                // Auto transition to going home
+                if (homeStartTime) {
+                    const homeElapsed = (Date.now() - homeStartTime) / 1000;
+                    if (homeElapsed > 3) {
+                        birthPhase = 'goingHome';
+                    }
+                }
+            } else if (birthPhase === 'goingHome') {
+                // Car ride home animation
+                const homeElapsed = (Date.now() - homeStartTime) / 1000;
+                const carProgress = Math.min(1, homeElapsed / 8); // 8 second drive
+                
+                // Night sky background
+                raceCtx.fillStyle = '#1a1a2e';
+                raceCtx.fillRect(0, 0, 800, 600);
+                
+                // Stars
+                raceCtx.fillStyle = '#fff';
+                for (let i = 0; i < 30; i++) {
+                    const sx = (i * 73) % 800;
+                    const sy = (i * 47) % 200;
+                    raceCtx.beginPath();
+                    raceCtx.arc(sx, sy, 1 + (i % 2), 0, Math.PI * 2);
+                    raceCtx.fill();
+                }
+                
+                // Road
+                raceCtx.fillStyle = '#333';
+                raceCtx.fillRect(0, 400, 800, 200);
+                raceCtx.strokeStyle = '#fff';
+                raceCtx.lineWidth = 3;
+                raceCtx.setLineDash([40, 20]);
+                raceCtx.beginPath();
+                raceCtx.moveTo(400, 400);
+                raceCtx.lineTo(400, 600);
+                raceCtx.stroke();
+                raceCtx.setLineDash([]);
+                
+                // House on the right (destination)
+                raceCtx.font = '100px';
+                raceCtx.fillText('🏠', 600, 380);
+                
+                // Car moving from left to right
+                const carX = -100 + (carProgress * 900);
+                const carY = 350;
+                
+                raceCtx.font = '60px';
+                raceCtx.fillText('🚗', carX, carY);
+                
+                // Baby in car
+                raceCtx.font = '30px';
+                raceCtx.fillText('👶', carX + 15, carY - 10);
+                
+                // Mom in car
+                raceCtx.fillText('👩', carX - 30, carY - 10);
+                
+                // Progress text
+                raceCtx.fillStyle = '#fff';
+                raceCtx.font = 'bold 28px Comic Sans MS';
+                raceCtx.textAlign = 'center';
+                raceCtx.fillText("Going home... 🏠", centerX, 80);
+                
+                // When car arrives
+                if (carProgress >= 1) {
+                    raceCtx.fillText("Welcome home! 🎉", centerX, 150);
+                    raceCtx.font = '20px Comic Sans MS';
+                    raceCtx.fillText("The baby is home!", centerX, 180);
+                    
+                    if (homeElapsed > 11) {
+                        // Transition to gameplay after arriving home
+                        phase = 'gameplay';
+                        document.getElementById('raceCanvas').style.display = 'none';
+                        document.getElementById('ui').style.display = 'flex';
+                        document.getElementById('task-box').style.display = 'block';
+                        document.getElementById('joystick').style.display = 'block';
+                        document.getElementById('floor').style.display = 'block';
+                        document.getElementById('baby').style.display = 'block';
+                        document.getElementById('house').style.display = 'block';
+                        document.getElementById('task-box').textContent = '🎮 Use joystick to move! Find the stars! ⭐';
+                        spawnTarget();
+                    }
+                }
             }
         }
         
