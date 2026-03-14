@@ -254,15 +254,17 @@
             <h1>🎮 Growing Up Game 🎮</h1>
             <p>Race to be the first to reach the egg!</p>
             <p>🏊 Use arrow keys or joystick to swim</p>
-            <p>❌ Avoid the white blood cells!</p>
-            <button onclick="startRace()">Start Race! 🏊</button>
+            <p>Choose your gender:</p>
+            <div style="display:flex;gap:20px;margin:20px;">
+                <button onclick="chooseGender('boy')" style="background:#87CEEB;">👦 Boy</button>
+                <button onclick="chooseGender('girl')" style="background:#FFB6C1;">👧 Girl</button>
+            </div>
         </div>
         
         <div id="race-start">
             <h1>🏊 Race to the Egg! 🏊</h1>
             <p>You're a tiny sperm! Swim fast to reach the egg!</p>
             <p>Use ⬅️ ➡️ ⬆️ ⬆️ arrow keys or joystick to move</p>
-            <p>Avoid the white blood cells! ❌</p>
             <button onclick="startRace()">GO! 🏊</button>
             <button onclick="skipRace()" style="margin-left:10px;background:#888;">Skip Race ➡️</button>
         </div>
@@ -304,6 +306,8 @@
         let phase = 'start'; // start, race, birth, home, gameplay
         let age = 0;
         let tasks = 0;
+        let gender = 'boy'; // 'boy' or 'girl'
+        let collectedItems = [];
         let currentTask = 0;
         
         // Race game vars
@@ -927,6 +931,12 @@
             }, 2500);
         }
         
+        function chooseGender(selectedGender) {
+            gender = selectedGender;
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('race-start').style.display = 'flex';
+        }
+        
         function startRace() {
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('joystick').style.display = 'block';
@@ -1147,11 +1157,18 @@
                       babyRect.bottom < tTop || 
                       babyRect.top > tTop + 40)) {
                     
+                    // Collect the item!
+                    const task = tasksList[currentTask % tasksList.length];
+                    collectedItems.push(task.emoji);
+                    
+                    // Hide the collected item
+                    document.getElementById('target').style.display = 'none';
+                    
                     tasks++;
                     currentTask++;
                     document.getElementById('tasks').textContent = tasks;
                     
-                    showMessage('Yay! ⭐');
+                    showMessage(`Got ${task.emoji}!`);
                     
                     if (tasks >= 5) {
                         tasks = 0;
