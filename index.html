@@ -1021,6 +1021,7 @@
             targetEl.style.top = targetY + 'px';
             
             const task = tasksList[currentTask % tasksList.length];
+            targetEl.textContent = task.emoji; // Show the actual emoji on screen!
             document.getElementById('task-box').textContent = `🎯 ${task.text} ${task.emoji}`;
         }
         
@@ -1178,8 +1179,10 @@
             }
             .target {
                 position: absolute;
-                font-size: 40px;
+                font-size: 60px;
                 animation: bounce 0.5s ease infinite alternate;
+                filter: drop-shadow(0 0 10px gold);
+                z-index: 100;
             }
         `;
         document.head.appendChild(style);
