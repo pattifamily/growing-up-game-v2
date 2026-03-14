@@ -1106,7 +1106,7 @@
             babyCanvas.id = 'babyCanvas';
             babyCanvas.width = 80;
             babyCanvas.height = 100;
-            babyCanvas.style.cssText = 'position:absolute;left:350px;top:450px;display:none;';
+            babyCanvas.style.cssText = 'position:absolute;left:350px;top:450px;display:none;z-index:50;';
             container.appendChild(babyCanvas);
             
             // Add house
@@ -1125,7 +1125,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             const centerX = canvas.width / 2;
-            const baseY = canvas.height - 20;
+            const baseY = canvas.height - 10;
             
             const skinColor = '#ffdbac';
             const hairColor = gender === 'boy' ? '#4a3728' : '#8B4513';
