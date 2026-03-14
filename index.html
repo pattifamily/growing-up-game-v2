@@ -772,12 +772,12 @@
 
             // Move player sperm - FASTER speed
             const speed = 8;
-            if (keys['ArrowUp'] || keys['w']) playerSperm.vy = -speed;
-            else if (keys['ArrowDown'] || keys['s']) playerSperm.vy = speed;
+            if (keys['ArrowUp'] || keys['w'] || joystickDY < -0.5) playerSperm.vy = -speed;
+            else if (keys['ArrowDown'] || keys['s'] || joystickDY > 0.5) playerSperm.vy = speed;
             else playerSperm.vy *= 0.9;
 
-            if (keys['ArrowLeft'] || keys['a']) playerSperm.vx = -speed;
-            else if (keys['ArrowRight'] || keys['d']) playerSperm.vx = speed;
+            if (keys['ArrowLeft'] || keys['a'] || joystickDX < -0.5) playerSperm.vx = -speed;
+            else if (keys['ArrowRight'] || keys['d'] || joystickDX > 0.5) playerSperm.vx = speed;
             else playerSperm.vx *= 0.9;
 
             playerSperm.x += playerSperm.vx;
