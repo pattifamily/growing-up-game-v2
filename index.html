@@ -868,6 +868,7 @@
         
         function startRace() {
             document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('joystick').style.display = 'block';
             phase = 'race';
             raceRunning = true;
             initRace();
@@ -877,6 +878,7 @@
         function skipRace() {
             // Skip the race - you win automatically!
             document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('joystick').style.display = 'block';
             phase = 'race';
             raceWon = true;
             showBaby = true;
@@ -1031,14 +1033,14 @@
             // Add baby
             const baby = document.createElement('div');
             baby.id = 'baby';
-            baby.style.cssText = 'position:absolute;font-size:70px;left:350px;top:400px;';
+            baby.style.cssText = 'position:absolute;font-size:70px;left:350px;top:400px;display:none;';
             baby.textContent = '👶';
             container.appendChild(baby);
             
             // Add house
             const house = document.createElement('div');
             house.id = 'house';
-            house.style.cssText = 'position:absolute;bottom:150px;right:50px;font-size:120px;';
+            house.style.cssText = 'position:absolute;bottom:150px;right:50px;font-size:120px;display:none;';
             house.textContent = '🏠';
             container.appendChild(house);
         }
