@@ -259,8 +259,8 @@
             <p>🏊 Use arrow keys or joystick to swim</p>
             <p>Choose your gender:</p>
             <div style="display:flex;gap:20px;margin:20px;">
-                <button onclick="chooseGender('boy')" style="background:#87CEEB;">👦 Boy</button>
-                <button onclick="chooseGender('girl')" style="background:#FFB6C1;">👧 Girl</button>
+                <button type="button" onclick="chooseGender('boy')" style="background:#87CEEB;">👦 Boy</button>
+                <button type="button" onclick="chooseGender('girl')" style="background:#FFB6C1;">👧 Girl</button>
             </div>
         </div>
         
@@ -937,6 +937,7 @@
         }
         
         function chooseGender(selectedGender) {
+            alert('Gender clicked: ' + selectedGender);
             gender = selectedGender;
             console.log('Gender selected:', gender);
             document.getElementById('start-screen').style.display = 'none';
