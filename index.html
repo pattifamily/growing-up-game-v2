@@ -1264,18 +1264,29 @@
         document.head.appendChild(style);
         
         // Gender button event listeners
-        document.getElementById('boyBtn').addEventListener('click', function() {
-            alert('BOY CLICKED!');
-            gender = 'boy';
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('race-start').style.display = 'flex';
-        });
-        document.getElementById('girlBtn').addEventListener('click', function() {
-            alert('GIRL CLICKED!');
-            gender = 'girl';
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('race-start').style.display = 'flex';
-        });
+        window.onload = function() {
+            console.log('Page loaded, setting up buttons');
+            var boyBtn = document.getElementById('boyBtn');
+            var girlBtn = document.getElementById('girlBtn');
+            
+            if (boyBtn) {
+                boyBtn.onclick = function() {
+                    alert('BOY CLICKED!');
+                    gender = 'boy';
+                    document.getElementById('start-screen').style.display = 'none';
+                    document.getElementById('race-start').style.display = 'flex';
+                };
+            }
+            if (girlBtn) {
+                girlBtn.onclick = function() {
+                    alert('GIRL CLICKED!');
+                    gender = 'girl';
+                    document.getElementById('start-screen').style.display = 'none';
+                    document.getElementById('race-start').style.display = 'flex';
+                };
+            }
+            console.log('Buttons setup complete');
+        };
     </script>
 </body>
 </html>
